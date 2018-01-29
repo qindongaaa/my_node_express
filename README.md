@@ -1,13 +1,13 @@
 # 使用node.js + express开发简易后台
 ### 开发环境node.js + express
-## [源码](https://github.com/peng1992/express)
+## [源码](https://github.com/qindongaaa/express)
 ## 项目预览
 ![](./public/images/express.gif)
 
 ## 复制项目
 ```
 # 将项目克隆到本地
-    git clone https://github.com/peng1992/express.git
+    git clone https://github.com/qindongaaa/express.git
 # 安装项目依赖
     cnpm install
 # 启动项目
@@ -27,13 +27,16 @@
     + js/   -------------------------js文件       
     + stylesheets/  -----------------css文件
 * routes/   -------------------------路由配置文件夹
-    + data.js   
-    + index.js  
+    + dbHandler
+        + dbOperator.js   -----------请求处理函数
+        + index.js  -----------------请求分配
+    + index.js   --------------------跳页路由配置
 * views/    -------------------------模板文件
     + edit.ejs    
     + error.ejs
     + index.ejs
     + login.ejs
+    + test.ejs
     + tujian.ejs
 * app.js   --------------------------存放的Express项目中最基本的配置信息
 * package.json   --------------------项目依赖文件
@@ -49,7 +52,7 @@
     var bodyParser = require('body-parser');
 
     var index = require('./routes/index');  ---------------------------引入index.js路由配置文件
-    var data = require('./routes/data');    ---------------------------引入data.js路由配置文件
+    var reqPro = require('./routes/dbHandler/index');  ----------------引入data.js路由配置文件
 
     var app = express();    -------------------------------------------用express创建一个app应用
 
@@ -66,7 +69,7 @@
     app.use(express.static(path.join(__dirname, 'public')));    -----------指定公共资源文件夹 为public/
 
     app.use('/', index);    ----------------------------当路径为'/'，即'http://localhost:3000/'时，匹配index.js
-    app.use('/data', data);     ------------------------当路径为'/data',即'http://localhost:3000/data'时，匹配data.js
+    app.use('/svrPro', reqPro);     ------------------------当路径为'/data',即'http://localhost:3000/svrPro'时，匹配data.js
     // 匹配404，即路径未匹配时
     app.use(function(req, res, next) {
       var err = new Error('Not Found');
